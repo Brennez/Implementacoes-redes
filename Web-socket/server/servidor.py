@@ -15,4 +15,4 @@ print("Opa amigo, recebi! ")
 with open(connection, 'rb') as file:
     for data in file.readlines():
         connection.send(data)
-    print("pagina enviada!")
+print("pagina enviada!")
