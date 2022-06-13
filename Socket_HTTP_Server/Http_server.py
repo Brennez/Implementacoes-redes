@@ -1,5 +1,3 @@
-from ast import Try
-from http import client
 import socket
 from urllib import request, response
 
@@ -8,9 +6,7 @@ PORT = 8081
 
 # Criando socket com IPV4 (AF_INET) usando conexão TCP(SOCK_STREAM)
 socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-
 # Permite reusar a porta e o endereço do server caso seja encerrado incorretamente
-# socket.setsockopt(socket.SOCKET_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Faz a junção (bind) do servidor com a porta
 socket.bind((HOST, PORT))
@@ -23,16 +19,26 @@ print("Servidor rodando na porta {}".format(PORT))
 while True:
     # Aguarda por novas conexões
     client_conection, client_addres = socket.accept()
+
+    # server_ssl = ssl.SSLContext.wrap_socket(
+    #     client_conection,
+    #     server_side=True,
+    #     certfile="./SSL/certificate.pem",
+    #     keyfile="./SSL/key.pem",
+    #     # version=ssl.PROTOCOL_TLSv1
+    # )
+
     # O método .recv recebe os dados enviados por um cliente através do socket
     request = client_conection.recv(1024)
     request = request.decode('utf-8')
     request = request.split(" ")
 
+    # print("MINHA REQUISIÇÃO")
     print(request)
 
     if(request[0] == "GET"):
         file = request[1].split(" ")
-        print("FILE: " + file[0][1:])
+        print("ARQUIVO: " + file[0][1:])
         if(file[0] == "/"):
             index = open("index.html")
             contend = index.read()
